@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 180" role="img" aria-labelledby="title">
+  <title id="title">دروب فلاي</title>
+  <rect width="420" height="180" rx="26" fill="#fff"/>
+  <text x="210" y="86" text-anchor="middle" font-family="Arial, sans-serif" font-size="58" font-weight="800" direction="rtl" fill="#070707">دروب <tspan fill="#69c6e5">فلاي</tspan></text>
+  <path d="M120 108c24 43 156 43 180 0" fill="none" stroke="#69c6e5" stroke-width="15" stroke-linecap="round"/>
+  <path d="m119 107 22-3-13 18M301 107l-22-3 13 18" fill="#69c6e5"/>
+</svg>
