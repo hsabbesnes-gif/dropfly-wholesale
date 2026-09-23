@@ -59,3 +59,4 @@
 .admin .draft-products>article{min-width:0;max-width:100%;overflow:hidden}
 .admin .draft-products footer{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 @media(max-width:700px){.admin .form-grid,.admin .draft-fields{grid-template-columns:minmax(0,1fr);gap:9px}.admin .form-grid>.wide{grid-column:auto}.admin .draft-products footer>*{flex:1 1 100%;text-align:start}}
+.auth-logo-crop{display:none!important}
