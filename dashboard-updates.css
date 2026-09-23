@@ -66,3 +66,45 @@
 .df-unpaid-accounts{margin:16px 0;padding:18px;border:1px solid #dce8ed;border-radius:18px;background:#fff;box-shadow:0 5px 18px #15394a0d}.df-unpaid-accounts>header{display:flex;align-items:center;justify-content:space-between;gap:10px}.df-unpaid-accounts h2{margin:0;font-size:1.15rem}.df-unpaid-accounts>header strong{color:#a44f00;font-size:1.15rem}.df-unpaid-list{display:grid;gap:8px;margin-top:12px}.df-unpaid-list article{display:grid;grid-template-columns:minmax(160px,1fr) minmax(100px,.8fr) auto;gap:12px;align-items:center;padding:12px;border-bottom:1px solid #edf1f3}.df-unpaid-list small{color:#6a7b82}.df-unpaid-list b{color:#a44f00;white-space:nowrap}.df-unread-badge{display:inline-flex;width:max-content;align-items:center;border-radius:99px;background:#fff1ec;color:#b54708;padding:5px 10px;font-size:.8rem}
 @media(max-width:700px){.df-push-toggle{font-size:.72rem;padding:6px}.df-order-filter{justify-content:stretch}.df-order-filter label{align-items:stretch;flex:1;flex-direction:column}.df-order-filter select{width:100%;min-width:0}.df-unpaid-accounts{padding:13px}.df-unpaid-list article{grid-template-columns:1fr auto}.df-unpaid-list small{grid-column:1}.df-unpaid-list b{grid-column:2;grid-row:1/3}}
 .df-order-support-unread{grid-column:1/-1;display:inline-flex;justify-self:start;width:max-content;max-width:100%;border-radius:99px;background:#fff0e8;color:#a94609;padding:5px 10px;font-size:.78rem;font-weight:700}
+
+/* The merchant header keeps notification settings in one compact control. */
+.merchant-app .app-header .header-actions{min-width:0;gap:8px}
+.merchant-app .header-actions>.notify,.merchant-app .header-actions>.logout,.df-notification-trigger{box-sizing:border-box;flex:0 0 42px;width:42px;height:42px}
+.df-notification-settings{position:relative;flex:0 0 auto}
+.df-notification-trigger{display:grid;place-items:center;border:1px solid #cce3ed;border-radius:12px;background:#f2f9fc;color:#147ca7;font-size:1.35rem;line-height:1;cursor:pointer}
+.df-notification-trigger:hover,.df-notification-trigger[aria-expanded="true"]{background:#e1f3fb;border-color:#9bcfe3}
+.df-notification-trigger:focus-visible,.df-notification-option:focus-visible,.df-open-trader:focus-visible,#df-order-status-select:focus-visible{outline:2px solid #087da9;outline-offset:2px}
+.df-notification-menu{position:absolute;top:calc(100% + 10px);left:0;z-index:50;box-sizing:border-box;width:min(300px,calc(100vw - 32px));display:grid;gap:9px;padding:14px;border:1px solid #d5e6ed;border-radius:16px;background:#fff;box-shadow:0 16px 44px #153b5330;text-align:right}
+.df-notification-menu[hidden]{display:none!important}
+.df-notification-menu>strong{color:#214457;font-size:.95rem}
+.df-notification-option{width:100%;min-height:44px;box-sizing:border-box;border:1px solid #e3ebef;border-radius:11px;padding:9px 11px;background:#f7fbfd;color:#234352;font-size:.88rem;font-weight:600;text-align:right;cursor:pointer}
+.df-notification-option[aria-pressed="true"],.df-notification-option.is-active{background:#e6f7ef;border-color:#b7dec9;color:#117850}
+.df-notification-option:disabled{opacity:.65;cursor:wait}
+.df-notification-hint{color:#677c88;line-height:1.6}
+
+.df-order-filter{justify-content:space-between;gap:14px}
+.df-order-filter-count{color:#647b87;font-size:.88rem;white-space:nowrap}
+.df-unpaid-accounts>header small{display:block;color:#6b7d86;margin-top:4px}
+.df-unpaid-list .df-unpaid-row{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(120px,auto) auto;gap:12px;align-items:center;padding:12px 2px;border-bottom:1px solid #e8eef1}
+.df-unpaid-avatar{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:#e6f5fc;color:#1684af;font-weight:800}
+.df-unpaid-identity{min-width:0;display:grid;gap:2px}.df-unpaid-identity b{color:#203d4b;overflow-wrap:anywhere}.df-unpaid-identity small{color:#6b7d86}.df-unpaid-identity small[dir="ltr"]{text-align:right}
+.df-unpaid-amount{display:grid;gap:2px;text-align:right}.df-unpaid-amount small{color:#73838a}.df-unpaid-amount strong{color:#aa5709;white-space:nowrap}
+.df-open-trader{min-height:40px;border:1px solid #c7e2ee;border-radius:11px;padding:8px 12px;background:#eef9fd;color:#137da7;font-weight:700;cursor:pointer;white-space:nowrap}
+.df-open-trader:hover{background:#dff3fb}
+.df-unpaid-empty,.df-unpaid-error{padding:18px;color:#6a7f88}
+.df-trader-contact{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.df-trader-contact span{padding:6px 10px;border-radius:9px;background:#f1f7fa;color:#31566a;font-size:.9rem}
+@media(max-width:700px){
+  .merchant-app .app-header{gap:8px;padding-inline:12px}
+  .merchant-app .app-header>.brand{display:none}
+  .merchant-app .app-header .header-title{min-width:0;flex:1 1 auto;padding-inline:0;overflow:hidden}
+  .merchant-app .app-header .header-title b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .merchant-app .app-header .header-actions{flex:0 0 auto;gap:6px}
+  .df-notification-menu{position:fixed;top:70px;left:12px;right:12px;width:auto;max-width:none}
+  .df-order-filter{align-items:stretch;flex-direction:column}
+  .df-unpaid-accounts>header{align-items:flex-start;flex-wrap:wrap}
+  .df-unpaid-list .df-unpaid-row{grid-template-columns:40px minmax(0,1fr) auto;gap:8px}
+  .df-unpaid-avatar{width:40px;height:40px}
+  .df-unpaid-amount{grid-column:2;grid-row:2;text-align:right}
+  .df-open-trader{grid-column:3;grid-row:1/3;padding-inline:9px;font-size:.83rem}
+}
+@media(max-width:380px){.merchant-app .header-actions>.notify,.merchant-app .header-actions>.logout,.df-notification-trigger{flex-basis:38px;width:38px;height:38px}.merchant-app .app-header .header-actions{gap:5px}}
