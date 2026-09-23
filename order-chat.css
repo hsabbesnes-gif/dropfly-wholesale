@@ -17,7 +17,9 @@
 @media(max-width:620px){.df-prepared .order-grid{grid-template-columns:1fr;gap:8px}.df-prepared .order .order-actions{display:flex;flex-wrap:wrap}.df-prepared .order .order-actions button{flex:1}}
 /* The details sheet scrolls normally; dragging to dismiss works only from its handle. */
 .details-sheet{touch-action:pan-y;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.details-sheet.df-enhanced>.details-hero,.details-sheet.df-enhanced>.order-items-breakdown,.details-sheet.df-enhanced>.specs,.details-sheet.df-enhanced>.customer-box{display:none}
+/* Hide the bundled details at first paint, before the async order lookup completes. */
+.merchant-app .details-sheet>.details-hero,.merchant-app .details-sheet>.order-items-breakdown,.merchant-app .details-sheet>.specs,.merchant-app .details-sheet>.customer-box{display:none}
+.df-details-loading{direction:rtl;padding:24px 18px;text-align:center;color:#58778a;font-weight:700}
 .df-order-details{direction:rtl;padding:12px 16px 28px;display:grid;gap:14px;color:#18384d}
 .df-details-identity,.df-products,.df-product,.df-sale,.df-profit{background:#fff;border:1px solid #e2ebf0;border-radius:15px;padding:13px}
 .df-details-identity{display:grid;gap:0}

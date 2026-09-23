@@ -109,6 +109,8 @@
     if (sheet.dataset.dfReady) return;
     const number = $('header h2', sheet)?.textContent?.trim(); if (!number || !session()?.access_token) return;
     sheet.dataset.dfReady = 'loading';
+    const loading = el('div', 'df-details-loading', 'جارِ تحميل تفاصيل الطلب...');
+    $('header', sheet).after(loading);
     try {
       const rows = await api('wholesale_orders', 'select=*,wholesale_order_items(*)&order_number=eq.' + encodeURIComponent(number) + '&limit=1');
       if (!sheet.isConnected) return;
@@ -128,8 +130,11 @@
       const profit = el('div', 'df-profit'); profit.append(el('span', '', 'الصافي لك بعد التوصيل'), el('strong', '', money(order.customer_price - order.product_price)));
       const chat = el('button', 'df-open-chat', 'إرسال ملاحظة • فتح دردشة الطلب'); chat.type = 'button';
       chat.onclick = async () => { chat.disabled = true; try { await merchantChat(order); } catch (error) { alert(error.message); } finally { chat.disabled = false; } };
-      content.append(identity, sale, products, profit, chat); $('header', sheet).after(content); sheet.classList.add('df-enhanced'); sheet.dataset.dfReady = 'done';
-    } catch { delete sheet.dataset.dfReady; }
+      content.append(identity, sale, products, profit, chat); loading.replaceWith(content); sheet.classList.add('df-enhanced'); sheet.dataset.dfReady = 'done';
+    } catch {
+      loading.textContent = 'تعذر تحميل التفاصيل. أغلق الطلب وافتحه مرة ثانية.';
+      sheet.dataset.dfReady = 'error';
+    }
   }
   let inbox = null;
   async function refreshInbox(list, errorBox) {
