@@ -51,3 +51,11 @@
 @media(max-width:700px){.df-trader-backdrop{padding:8px;align-items:end}.df-trader-profile{max-height:92dvh;border-radius:18px 18px 8px 8px}.df-trader-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.df-transaction{gap:7px}.admin-header{width:100%;overflow:visible}.admin-header>.admin-order-search input,.admin-header>.admin-order-search select{flex:1 1 100%;width:100%}.admin .price-fields,.admin .pricing-fields{grid-template-columns:minmax(0,1fr);gap:8px}.admin button,.admin select{min-height:40px}}
 /* The DropFly mark was confusing; keep interface text but omit its logo mark. */
 .brand>img{display:none!important}
+.admin .form-grid,.admin .draft-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;align-items:start}
+.admin .form-grid>label,.admin .draft-fields>label{min-width:0;width:100%}
+.admin .form-grid>.wide{grid-column:1/-1}
+.admin .draft-fields input,.admin .draft-fields select,.admin .form-grid input,.admin .form-grid select,.admin .form-grid textarea{display:block;width:100%;min-width:0}
+.admin .draft-products{width:100%;max-width:100%;min-width:0}
+.admin .draft-products>article{min-width:0;max-width:100%;overflow:hidden}
+.admin .draft-products footer{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+@media(max-width:700px){.admin .form-grid,.admin .draft-fields{grid-template-columns:minmax(0,1fr);gap:9px}.admin .form-grid>.wide{grid-column:auto}.admin .draft-products footer>*{flex:1 1 100%;text-align:start}}
