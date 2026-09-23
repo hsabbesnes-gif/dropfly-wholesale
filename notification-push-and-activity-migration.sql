@@ -75,7 +75,7 @@ begin
     select coalesce(business_name,full_name,'نشاط تجاري') into v_business from public.wholesale_profiles where id=new.merchant_id;
     insert into public.wholesale_notifications(sender_id,recipient_role,title,message,body,kind,entity_id,allow_reply)
     values(new.merchant_id,'admin','طلب تسديد جديد',coalesce(v_business,'نشاط تجاري'),
-      'طلب تسديد من '||coalesce(v_business,'نشاط تجاري')||E'\nالمبلغ المطلوب: '||coalesce(new.requested_amount,0)||' د.ع'||E'\nتاريخ الطلب: '||coalesce(new.requested_at,new.created_at,now())::text,
+      'طلب تسديد من '||coalesce(v_business,'نشاط تجاري')||E'\nالمبلغ المطلوب: '||coalesce(new.requested_amount,0)||' د.ع'||E'\nتاريخ الطلب: '||coalesce(new.requested_at,now())::text,
       'payout_request',new.id::text,false);
   elsif tg_table_name='wholesale_profiles' and tg_op='UPDATE' and new.status is distinct from old.status then
     insert into public.wholesale_notifications(sender_id,recipient_id,title,body,kind,entity_id,allow_reply)
