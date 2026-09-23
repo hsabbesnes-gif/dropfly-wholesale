@@ -33,3 +33,21 @@
 .df-support-form textarea{flex:1;min-width:0;resize:vertical;border:1px solid #d3e0e6;border-radius:12px;padding:10px}.df-support-form button{border:0;border-radius:11px;background:#0798df;color:#fff;padding:10px 16px}
 .df-payout-pending{display:flex;align-items:center;gap:12px;padding:12px;margin:10px 0;border:1px solid #f2d28a;border-radius:13px;background:#fff9e8}.df-payout-pending>span{font-size:1.35rem;color:#bd7b00}.df-payout-pending>div{display:grid;gap:5px;flex:1}.df-payout-pending small{color:#687982}.df-payout-pending strong{color:#a76500;white-space:nowrap}
 @media(max-width:700px){.admin-header{gap:8px;padding:10px 14px}.admin-header nav{flex:1 1 100%;order:2}.admin-header>.admin-order-search{gap:6px;padding:8px}.admin-header>.admin-order-search select{flex:1 1 120px}#df-sound-toggle,#df-merchant-sound-toggle{font-size:.72rem;padding:6px}.admin-table.admin-full>article.df-actions-added{grid-template-columns:auto minmax(0,1fr) auto}.df-order-tools{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))}.df-order-tools select{grid-column:1/-1;width:100%}.df-ticket-row{align-items:flex-start;flex-direction:column}.df-ticket-row>button{width:100%}.df-transaction{grid-template-columns:1fr auto}.df-transaction time{grid-column:1}.df-transaction b{grid-column:2;grid-row:1/3}.df-payout-pending{align-items:flex-start}}
+
+/* Trader details use a fixed dialog so every trader remains reachable in long lists. */
+.df-trader-backdrop{position:fixed;inset:0;z-index:10010;display:grid;place-items:center;padding:clamp(10px,3vw,28px);background:#102a3c99;overflow:auto}
+.df-trader-profile{width:min(920px,100%);max-height:min(90dvh,900px);overflow:auto;margin:0;padding:clamp(16px,3vw,26px);border-radius:20px;box-shadow:0 24px 80px #071c2c55}
+.df-trader-profile>header h2{margin:4px 0 0;font-size:clamp(1.1rem,2.5vw,1.55rem)}
+.df-trader-profile>header small{color:#69818d}.df-trader-profile>header button{flex:none}
+.df-trader-transactions{max-height:38dvh;overflow:auto}
+.admin-cards>article.df-bound{transition:box-shadow .15s,transform .15s}.admin-cards>article.df-bound:hover{box-shadow:0 8px 26px #1232;transform:translateY(-1px)}
+/* Keep dashboard controls and order pricing fields inside their viewport. */
+.admin,.admin *{min-width:0}.admin{width:100%;overflow-x:hidden}.admin-header,.admin-header nav,.admin-order-search{box-sizing:border-box;max-width:100%}
+.admin-header nav button,.admin-header>button{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.admin input,.admin select,.admin textarea,.merchant-app input,.merchant-app select,.merchant-app textarea{box-sizing:border-box;max-width:100%}
+.admin .order-form,.admin .create-order,.admin .order-builder,.admin .price-fields,.admin .pricing-fields{width:100%;max-width:100%}
+.admin .price-fields,.admin .pricing-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px}
+.admin .price-fields input,.admin .pricing-fields input{width:100%;min-width:0}
+@media(max-width:700px){.df-trader-backdrop{padding:8px;align-items:end}.df-trader-profile{max-height:92dvh;border-radius:18px 18px 8px 8px}.df-trader-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.df-transaction{gap:7px}.admin-header{width:100%;overflow:visible}.admin-header>.admin-order-search input,.admin-header>.admin-order-search select{flex:1 1 100%;width:100%}.admin .price-fields,.admin .pricing-fields{grid-template-columns:minmax(0,1fr);gap:8px}.admin button,.admin select{min-height:40px}}
+/* The DropFly mark was confusing; keep interface text but omit its logo mark. */
+.brand>img{display:none!important}
