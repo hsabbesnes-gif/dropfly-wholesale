@@ -1,7 +1,7 @@
-const CACHE = "dropfly-wholesale-github-v8";
+const CACHE = "dropfly-wholesale-github-v9";
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 const scoped = (path) => `${SCOPE_PATH}${path}`;
-const STATIC_ASSETS = [scoped("/"), scoped("/manifest.webmanifest"), scoped("/favicon.svg"), scoped("/dropfly-logo.svg")];
+const STATIC_ASSETS = [scoped("/"), scoped("/manifest.webmanifest")];
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -19,6 +19,24 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+self.addEventListener("push", (event) => {
+  let data = {};
+  try { data = event.data ? event.data.json() : {}; } catch { data = { body: event.data?.text() || "لديك تحديث جديد" }; }
+  event.waitUntil(self.registration.showNotification(data.title || "تحديث جديد", {
+    body: data.body || data.message || "لديك إشعار جديد",
+    tag: data.tag || data.entity_id || "dropfly-notification",
+    data: { url: data.url || scoped("/") },
+    renotify: true
+  }));
+});
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = new URL(event.notification.data?.url || scoped("/"), self.location.origin).href;
+  event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+    const existing = clients.find((client) => client.url.startsWith(self.location.origin + SCOPE_PATH));
+    return existing ? existing.navigate(url).then((client) => client.focus()) : self.clients.openWindow(url);
+  }));
+});
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   if (event.request.mode === "navigate") {
