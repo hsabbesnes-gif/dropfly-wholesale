@@ -58,6 +58,8 @@
   function closeChat() { if (chatPoll) clearInterval(chatPoll); chatPoll = null; currentChat?.remove(); currentChat = null; }
   async function openChat(ticket, title, admin = false) {
     closeChat(); const overlay = el('div', 'df-chat-overlay'); const panel = el('section', 'df-chat');
+    const noticeQuery = admin ? 'kind=eq.support&recipient_role=eq.admin' : 'kind=eq.support&recipient_id=eq.' + encodeURIComponent(session()?.user?.id || '');
+    api('wholesale_notifications', noticeQuery + '&entity_id=eq.' + encodeURIComponent(ticket.order_id || ticket.id), { method: 'PATCH', body: { is_read: true } }).catch(() => {});
     const header = el('header'); const heading = el('div'); heading.append(el('b', '', title), el('small', '', 'دردشة خاصة بهذا الطلب'));
     const close = el('button', 'df-close', '×'); close.setAttribute('aria-label', 'إغلاق الدردشة'); close.onclick = closeChat; header.append(heading, close);
     const messages = el('div', 'df-messages'); const status = el('p', 'df-chat-status');
@@ -165,6 +167,30 @@
     const error = el('p', 'df-inbox-error'); const list = el('div', 'df-ticket-list'); inbox.append(head, error, list); document.body.append(inbox);
     const update = () => refreshInbox(list, error).catch(e => { error.textContent = e.message; }); update(); inboxPoll = setInterval(update, 5000);
   }
+  let badgeTimer = null, badgeBusy = false;
+  async function updateSupportBadges() {
+    if (badgeBusy || !session()?.access_token) return;
+    const merchant = $('.merchant-app'), admin = $('.admin'), who = session()?.user?.id;
+    if (!merchant && !admin) return;
+    badgeBusy = true;
+    try {
+      const filter = admin ? 'recipient_role=eq.admin' : 'recipient_id=eq.' + encodeURIComponent(who || '');
+      const notices = await api('wholesale_notifications', 'select=entity_id&kind=eq.support&is_read=eq.false&' + filter + '&limit=1000');
+      const counts = new Map(); notices.forEach(n => counts.set(n.entity_id, (counts.get(n.entity_id) || 0) + 1));
+      const scope = admin ? '' : '&merchant_id=eq.' + encodeURIComponent(who || '');
+      const orders = await api('wholesale_orders', 'select=id,order_number' + scope + '&limit=2000');
+      const byNumber = new Map(orders.map(o => [String(o.order_number), o.id]));
+      document.querySelectorAll((admin ? '.admin-table.admin-full>article.df-actions-added' : '.merchant-app article.order')).forEach(card => {
+        const key = admin ? card.innerText.match(/DF-[\w-]+/)?.[0] : $('.order-top b', card)?.textContent?.trim();
+        const orderId = key && (byNumber.get(key) || key);
+        const count = orderId ? counts.get(orderId) || 0 : 0;
+        let badge = $('.df-order-support-unread', card);
+        if (count && !badge) { badge = el('span', 'df-order-support-unread'); card.append(badge); }
+        if (badge) { if (count) badge.textContent = count + ' رسالة دعم جديدة'; else badge.remove(); }
+      });
+    } catch { /* The page can still be used if support badges are unavailable. */ }
+    finally { badgeBusy = false; }
+  }
   let scheduled = false;
   function scan() {
     scheduled = false;
@@ -178,5 +204,5 @@
     if (!admin) { $('#df-admin-chat-button')?.remove(); if (inbox) { inbox.remove(); inbox = null; clearInterval(inboxPoll); } }
   }
   new MutationObserver(() => { if (!scheduled) { scheduled = true; requestAnimationFrame(scan); } }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-  scan();
+  scan(); updateSupportBadges(); badgeTimer = setInterval(updateSupportBadges, 12000);
 })();
