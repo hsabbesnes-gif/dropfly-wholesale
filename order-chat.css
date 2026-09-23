@@ -39,3 +39,5 @@
 .df-prepared .order .card-main{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:start;border-radius:12px}
 .df-prepared .order .card-body{padding:3px 7px}
 .df-prepared .order .card-money{margin-top:5px}
+.order.late{border:2px solid #e67b38;box-shadow:0 0 0 3px #fff1e7}
+.order.late .order-top:after{content:'⚠ تأخر أكثر من 18 ساعة';display:block;color:#aa481e;background:#fff0e5;border-radius:7px;padding:4px 7px;font-size:.72rem;font-weight:800}
