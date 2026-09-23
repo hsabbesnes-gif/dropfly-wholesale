@@ -105,9 +105,17 @@
     if (!rows.length) throw new Error('تعذر فتح دردشة الطلب');
     await openChat(rows[0], 'الطلب ' + order.order_number);
   }
+  async function adminChat(order) {
+    const rows = await api('wholesale_support_tickets', 'select=id,order_id,merchant_id,status,expires_at,subject&order_id=eq.' + order.id + '&limit=1');
+    if (!rows.length) throw new Error('ماكو دردشة مفتوحة لهذا الطلب بعد. تنفتح أول ما التاجر يرسل ملاحظة.');
+    await openChat(rows[0], 'الطلب ' + order.order_number, true);
+  }
   async function enhanceDetails(sheet) {
+    if (sheet.dataset.dfReady === 'done' && !$('.df-order-details', sheet)) delete sheet.dataset.dfReady;
     if (sheet.dataset.dfReady) return;
-    const number = $('header h2', sheet)?.textContent?.trim(); if (!number || !session()?.access_token) return;
+    const admin = sheet.classList.contains('admin-detail-sheet');
+    if (admin && !$('.detail-product', sheet)) return;
+    const number = $('header h2', sheet)?.textContent?.trim().replace(/^الطلب\s+/, ''); if (!number || !session()?.access_token) return;
     sheet.dataset.dfReady = 'loading';
     const loading = el('div', 'df-details-loading', 'جارِ تحميل تفاصيل الطلب...');
     $('header', sheet).after(loading);
@@ -128,8 +136,8 @@
       }
       if (!(order.wholesale_order_items || []).length) products.append(el('p', '', 'لم تتوفر تفاصيل المنتجات'));
       const profit = el('div', 'df-profit'); profit.append(el('span', '', 'الصافي لك بعد التوصيل'), el('strong', '', money(order.customer_price - order.product_price)));
-      const chat = el('button', 'df-open-chat', 'إرسال ملاحظة • فتح دردشة الطلب'); chat.type = 'button';
-      chat.onclick = async () => { chat.disabled = true; try { await merchantChat(order); } catch (error) { alert(error.message); } finally { chat.disabled = false; } };
+      const chat = el('button', 'df-open-chat', admin ? 'فتح دردشة الطلب' : 'إرسال ملاحظة • فتح دردشة الطلب'); chat.type = 'button';
+      chat.onclick = async () => { chat.disabled = true; try { await (admin ? adminChat(order) : merchantChat(order)); } catch (error) { alert(error.message); } finally { chat.disabled = false; } };
       content.append(identity, sale, products, profit, chat); loading.replaceWith(content); sheet.classList.add('df-enhanced'); sheet.dataset.dfReady = 'done';
     } catch {
       loading.textContent = 'تعذر تحميل التفاصيل. أغلق الطلب وافتحه مرة ثانية.';
@@ -163,6 +171,7 @@
     const merchant = $('.merchant-app'), admin = $('.admin');
     document.body.classList.toggle('df-prepared', !!merchant && !!$('.app-nav button.active')?.textContent?.includes('المجهزة'));
     document.querySelectorAll('.merchant-app .details-sheet').forEach(enhanceDetails);
+    document.querySelectorAll('.admin .admin-detail-sheet').forEach(enhanceDetails);
     if (admin && !$('#df-admin-chat-button')) {
       const button = el('button', 'df-admin-chat-button', 'دردشات الطلبات'); button.id = 'df-admin-chat-button'; button.onclick = openInbox; admin.append(button);
     }

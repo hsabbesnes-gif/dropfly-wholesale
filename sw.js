@@ -1,4 +1,4 @@
-const CACHE = "dropfly-wholesale-github-v6";
+const CACHE = "dropfly-wholesale-github-v7";
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 const scoped = (path) => `${SCOPE_PATH}${path}`;
 const STATIC_ASSETS = [scoped("/"), scoped("/manifest.webmanifest"), scoped("/favicon.svg"), scoped("/dropfly-logo.svg")];
