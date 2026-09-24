@@ -1,4 +1,4 @@
-const CACHE = "dropfly-wholesale-github-v12";
+const CACHE = "dropfly-wholesale-github-v13";
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 const scoped = (path) => `${SCOPE_PATH}${path}`;
 const STATIC_ASSETS = [scoped("/"), scoped("/manifest.webmanifest")];
@@ -51,14 +51,14 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   event.respondWith(
-    caches.match(event.request).then((cached) =>
-      cached || fetch(event.request).then((response) => {
-        if (response.ok && new URL(event.request.url).origin === self.location.origin) {
-          const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
-        }
-        return response;
-      }),
-    ),
-  );
+  fetch(event.request, { cache: "no-store" })
+    .then((response) => {
+      if (response.ok && new URL(event.request.url).origin === self.location.origin) {
+        const copy = response.clone();
+        caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+      }
+      return response;
+    })
+    .catch(() => caches.match(event.request))
+);
 });
