@@ -138,7 +138,7 @@
       }
       if (!(order.wholesale_order_items || []).length) products.append(el('p', '', 'لم تتوفر تفاصيل المنتجات'));
       const profit = el('div', 'df-profit'); profit.append(el('span', '', 'االصافي للشركة بعد التوصيل'), el('strong', '', money(order.customer_price - order.product_price)));
-      const chat = el('button', 'df-open-chat', admin ? 'فتح دردشة الطلب' : 'فتح دردشة مع الشركة بخصوص الطلب ا'); chat.type = 'button';
+      const chat = el('button', 'df-open-chat', admin ? 'فتح دردشة الطلب' : 'فتح دردشة بخصوص الطلب مع الشركة ا'); chat.type = 'button';
       chat.onclick = async () => { chat.disabled = true; try { await (admin ? adminChat(order) : merchantChat(order)); } catch (error) { alert(error.message); } finally { chat.disabled = false; } };
       content.append(identity, sale, products, profit, chat); loading.replaceWith(content); sheet.classList.add('df-enhanced'); sheet.dataset.dfReady = 'done';
     } catch {
