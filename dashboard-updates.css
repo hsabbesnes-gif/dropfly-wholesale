@@ -93,6 +93,10 @@
 .df-open-trader:hover{background:#dff3fb}
 .df-unpaid-empty,.df-unpaid-error{padding:18px;color:#6a7f88}
 .df-trader-contact{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.df-trader-contact span{padding:6px 10px;border-radius:9px;background:#f1f7fa;color:#31566a;font-size:.9rem}
+.df-edit-trader-toggle{margin:14px 0 8px;border:0;border-radius:11px;padding:10px 15px;background:#087fa8;color:#fff;font-weight:700;cursor:pointer}
+.df-trader-edit-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:8px 0 18px;padding:16px;border:1px solid #dce8ed;border-radius:15px;background:#f8fbfc}
+.df-trader-edit-form[hidden]{display:none!important}.df-trader-edit-form label{display:grid;gap:6px;color:#536d79;font-size:.88rem}.df-trader-edit-form input,.df-trader-edit-form select{width:100%;min-height:43px;border:1px solid #ccdae1;border-radius:10px;padding:9px 11px;background:#fff;color:#193a49}
+.df-trader-edit-actions{display:flex;gap:8px;align-items:center}.df-trader-edit-actions button{min-height:40px;border:0;border-radius:10px;padding:9px 15px;background:#087fa8;color:#fff;font-weight:700;cursor:pointer}.df-trader-edit-actions button+button{background:#eaf1f4;color:#3c5662}.df-trader-edit-feedback{align-self:center;color:#55717d}
 @media(max-width:700px){
   .merchant-app .app-header{gap:8px;padding-inline:12px}
   .merchant-app .app-header>.brand{display:none}
@@ -101,6 +105,7 @@
   .merchant-app .app-header .header-actions{flex:0 0 auto;gap:6px}
   .df-notification-menu{position:fixed;top:70px;left:12px;right:12px;width:auto;max-width:none}
   .df-order-filter{align-items:stretch;flex-direction:column}
+  .df-trader-edit-form{grid-template-columns:minmax(0,1fr);padding:12px}
   .df-unpaid-accounts>header{align-items:flex-start;flex-wrap:wrap}
   .df-unpaid-list .df-unpaid-row{grid-template-columns:40px minmax(0,1fr) auto;gap:8px}
   .df-unpaid-avatar{width:40px;height:40px}
