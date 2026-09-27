@@ -106,3 +106,65 @@
   .merchant-app.df-prepared-view .order>.order-actions>button,
   .merchant-app.df-prepared-view .order>.order-actions>.locked{font-size:.59rem;padding-inline:2px}
 }
+
+/* Align the three merchant tabs from the same top edge on phones. */
+@media(max-width:700px){
+  .merchant-app.df-prepared-view .app-header,
+  .merchant-app:not(.df-prepared-view) .app-header{
+    height:88px;min-height:88px;padding:12px 16px 8px;
+    align-items:center;gap:8px;
+  }
+  .merchant-app.df-prepared-view .header-title b,
+  .merchant-app:not(.df-prepared-view) .header-title b{
+    font-size:1.08rem;line-height:1.28;
+  }
+  .merchant-app.df-prepared-view .header-title small,
+  .merchant-app:not(.df-prepared-view) .header-title small{
+    font-size:.76rem;line-height:1.2;
+  }
+  .merchant-app.df-prepared-view .app-content,
+  .merchant-app:not(.df-prepared-view) .app-content{
+    padding:10px 16px max(152px,calc(132px + env(safe-area-inset-bottom)));
+  }
+  .merchant-app.df-prepared-view .screen-head,
+  .merchant-app:not(.df-prepared-view) .screen-head{
+    min-height:100px;margin:0 0 14px;padding:17px 19px;
+    align-items:center;border-radius:23px;
+  }
+  .merchant-app.df-prepared-view .screen-head h1,
+  .merchant-app:not(.df-prepared-view) .screen-head h1{
+    margin:5px 0 0;font-size:1.25rem;line-height:1.25;
+  }
+  .merchant-app.df-prepared-view .screen-head .kicker,
+  .merchant-app:not(.df-prepared-view) .screen-head .kicker{font-size:.76rem}
+  .merchant-app.df-prepared-view .screen-head .count,
+  .merchant-app:not(.df-prepared-view) .screen-head .count{
+    min-width:78px;padding:10px 12px;font-size:.9rem;text-align:center;
+  }
+  .merchant-app.df-prepared-view .smart-search,
+  .merchant-app:not(.df-prepared-view) .smart-search{
+    display:grid;grid-template-columns:24px minmax(0,1fr);
+    height:auto;min-height:98px;gap:0 9px;padding:8px 14px 5px;
+    align-items:center;border-radius:20px;background:#fff;
+  }
+  .merchant-app.df-prepared-view .smart-search>svg,
+  .merchant-app:not(.df-prepared-view) .smart-search>svg{grid-column:1;grid-row:1;width:21px;height:21px}
+  .merchant-app.df-prepared-view .smart-search input,
+  .merchant-app:not(.df-prepared-view) .smart-search input{
+    grid-column:2;grid-row:1;width:100%;height:43px;padding:0;
+    font-size:.94rem;
+  }
+  .merchant-app.df-prepared-view .smart-search select,
+  .merchant-app:not(.df-prepared-view) .smart-search select{
+    grid-column:1/-1;grid-row:2;width:100%;max-width:none;
+    min-height:38px;margin:0;padding:5px 3px 0;
+    border:0;border-top:1px solid #e9f0f6;
+    background:transparent;font-size:.8rem;
+  }
+  .merchant-app.df-prepared-view .smart-search{margin-bottom:0;border-radius:20px 20px 0 0}
+  .merchant-app.df-prepared-view .df-prepared-filters{
+    min-height:54px;margin:0 0 14px;padding:2px 14px 12px;
+    border-radius:0 0 20px 20px;
+  }
+  .merchant-app:not(.df-prepared-view) .smart-search{margin-bottom:14px}
+}
