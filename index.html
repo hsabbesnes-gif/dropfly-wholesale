@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./app-enhancements.css?v=4" />
     <link rel="stylesheet" href="./prepared-ios.css?v=1" />
     <link rel="stylesheet" href="./ios-unified.css?v=2" />
+    <link rel="stylesheet" href="./responsive-polish.css?v=1" />
     <script defer src="./order-chat.js?v=9"></script>
     <script defer src="./dashboard-updates.js?v=13"></script>
     <script defer src="./preserve-view.js?v=1"></script>
@@ -24,13 +25,13 @@
       if ('serviceWorker' in navigator) {
         const hadController = !!navigator.serviceWorker.controller;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (hadController && sessionStorage.getItem('dropfly-sw-v24-reloaded') !== '1') {
-            sessionStorage.setItem('dropfly-sw-v24-reloaded', '1');
+          if (hadController && sessionStorage.getItem('dropfly-sw-v25-reloaded') !== '1') {
+            sessionStorage.setItem('dropfly-sw-v25-reloaded', '1');
             location.reload();
           }
         });
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js?v=24', { scope: './', updateViaCache: 'none' })
+          navigator.serviceWorker.register('./sw.js?v=25', { scope: './', updateViaCache: 'none' })
             .then(registration => registration.update())
             .catch(error => console.error('Service worker registration failed', error));
         });
