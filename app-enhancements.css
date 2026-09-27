@@ -1,0 +1,35 @@
+/* Match new order cards to the clearer prepared-order layout. */
+body.df-home-orders .merchant-app .order-grid{gap:10px}
+body.df-home-orders .merchant-app .order{padding:11px;border-radius:15px}
+body.df-home-orders .merchant-app .order .card-main{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:start;gap:10px;border-radius:12px}
+body.df-home-orders .merchant-app .order .product-photo{width:64px;height:64px;flex:0 0 64px;object-fit:cover;border-radius:11px}
+body.df-home-orders .merchant-app .order .card-body{min-width:0;padding:3px 7px}
+body.df-home-orders .merchant-app .order .card-body h3{font-size:.82rem;margin:5px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.df-home-orders .merchant-app .order .order-top small,body.df-home-orders .merchant-app .order .variant,body.df-home-orders .merchant-app .order .order-info{display:none}
+body.df-home-orders .merchant-app .order .order-top b{font-size:.84rem}
+body.df-home-orders .merchant-app .order .badge{font-size:.68rem;padding:5px 8px}
+body.df-home-orders .merchant-app .order .card-money{padding:7px 9px;margin-top:5px;gap:4px;border-radius:10px;background:#e8f7ef}
+body.df-home-orders .merchant-app .order .card-money span{font-size:.7rem}
+body.df-home-orders .merchant-app .order .card-money strong{font-size:.9rem;color:#14796c}
+body.df-home-orders .merchant-app .order .open-details{font-size:.75rem;margin-top:5px}
+body.df-home-orders .merchant-app .order .order-actions{padding-top:8px;gap:6px}
+body.df-home-orders .merchant-app .order .order-actions button{font-size:.72rem;padding:8px;border-radius:10px}
+@media(max-width:620px){body.df-home-orders .merchant-app .order-grid{grid-template-columns:1fr;gap:8px}body.df-home-orders .merchant-app .order .order-actions{display:flex;flex-wrap:wrap}body.df-home-orders .merchant-app .order .order-actions button{flex:1}}
+/* Clean merchant account card, without the old blue background or logo tile. */
+.merchant-app .account-banner{color:#203d39;background:linear-gradient(135deg,#eaf5ef,#f6faf7);border:1px solid #dcebe2;border-radius:24px;padding:clamp(16px,3vw,26px);box-shadow:0 12px 34px #244e3b10;gap:14px}
+.merchant-app .account-banner .store-photo{display:none!important}
+.merchant-app .account-banner>div:nth-child(2){flex:1;min-width:170px}
+.merchant-app .account-banner>div:nth-child(2)>span{color:#568072}
+.merchant-app .account-banner h1{color:#203d39}
+.merchant-app .account-banner>div:nth-child(2)>p{color:#657f76}
+.merchant-app .due-box{width:min(440px,52%);color:#203d39;background:#fff;border:1px solid #e1ece5;border-radius:18px;padding:17px;box-shadow:0 7px 22px #244e3b0b}
+.merchant-app .due-box small{color:#56756b;font-size:.82rem;line-height:1.6}
+.merchant-app .due-box strong{color:#14796c}
+.merchant-app .due-box button{background:#14796c;color:#fff;border-radius:12px;min-height:48px}
+.merchant-app .df-product .df-merchant-profit{background:#e8f7ef;border-radius:10px;padding:8px 9px;margin:5px 0;border:0}
+.merchant-app .df-product .df-merchant-profit>span{min-width:0;flex:1;color:#4e7568;font-size:.72rem;line-height:1.35}
+.merchant-app .df-product .df-merchant-profit>strong{color:#14796c;font-size:.88rem}
+@media(max-width:620px){.merchant-app .account-banner{align-items:stretch}.merchant-app .account-banner>div:nth-child(2){min-width:0}.merchant-app .due-box{width:100%;margin:0}.merchant-app .account-banner h1{font-size:1.2rem}}
+.df-install-banner{position:fixed;z-index:12000;inset:auto 16px calc(18px + env(safe-area-inset-bottom)) 16px;max-width:560px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;background:#fff;border:1px solid #dbe9e1;border-radius:18px;box-shadow:0 12px 42px #17372d30;color:#203d39;font-family:inherit;direction:rtl}
+.df-install-copy{display:grid;gap:4px;min-width:0}.df-install-copy strong{font-size:.92rem}.df-install-copy span{font-size:.76rem;color:#658077;line-height:1.5}.df-install-actions{display:flex;align-items:center;gap:7px;flex:none}.df-install-actions button{font:inherit;font-size:.78rem;font-weight:800;border-radius:10px;padding:9px 13px;cursor:pointer}.df-install-action{border:0;background:#14796c;color:white}.df-install-dismiss{border:1px solid #dce8e1;background:#f7faf8;color:#56756b}
+@media(max-width:460px){.df-install-banner{inset-inline:10px;padding:12px;gap:8px}.df-install-actions button{padding:8px 10px}.df-install-copy strong{font-size:.82rem}.df-install-copy span{font-size:.69rem}}
