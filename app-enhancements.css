@@ -40,3 +40,22 @@ body.df-home-orders .merchant-app .order .order-actions button{font-size:.72rem;
 .merchant-app .df-profile-row span{color:#71847c;font-size:.88rem}
 .merchant-app .df-profile-row b{max-width:65%;overflow-wrap:anywhere;color:#24423a;font-size:.92rem}
 @media(max-width:620px){.merchant-app .df-merchant-profile-card{margin:12px 0 16px;padding:15px;border-radius:17px}.merchant-app .df-profile-row{align-items:flex-start;flex-direction:column;gap:5px}.merchant-app .df-profile-row b{max-width:100%}}
+/* Present the merchant profile first, followed by a separate due-amount card. */
+.merchant-app .df-merchant-profile-card{position:relative;overflow:hidden;margin:0 0 14px;padding:18px 20px;background:linear-gradient(145deg,#fff 0%,#f6fbf8 100%);border:1px solid #dcebe3;border-radius:22px;box-shadow:0 10px 28px #17372d12;color:#203d39}
+.merchant-app .df-merchant-profile-card:before{content:"";position:absolute;inset:0 0 0 auto;width:5px;background:linear-gradient(180deg,#23aa84,#14796c)}
+.merchant-app .df-merchant-profile-card h2{display:flex;align-items:center;gap:9px;margin:0 0 12px;padding:0 0 12px;border-bottom:1px solid #e7f0eb;font-size:1rem;font-weight:850;color:#14796c}
+.merchant-app .df-merchant-profile-card h2:before{content:"";width:9px;height:9px;border-radius:50%;background:#1ca77d;box-shadow:0 0 0 5px #e5f6ed}
+.merchant-app .df-profile-row{display:grid;grid-template-columns:minmax(125px,.9fr) minmax(0,1.1fr);align-items:center;gap:10px;margin-top:8px;padding:12px 14px;border:1px solid #e8f0eb;border-radius:13px;background:#fff}
+.merchant-app .df-profile-row[data-field="owner"]{background:#edf8f2;border-color:#dcefe4}
+.merchant-app .df-profile-row span{color:#70877d;font-size:.84rem;font-weight:650}
+.merchant-app .df-profile-row b{max-width:100%;overflow-wrap:anywhere;color:#203d39;font-size:.92rem;font-weight:800;text-align:right}
+.merchant-app .df-profile-row b[dir="ltr"]{direction:ltr;text-align:left;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.merchant-app .account-banner.df-account-layout{display:contents!important;background:none!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
+.merchant-app .account-banner.df-account-layout>:not(.due-box){display:none!important}
+.merchant-app .account-banner.df-account-layout .due-box{display:block;width:100%;max-width:none;margin:0 0 20px;padding:19px 20px;background:linear-gradient(135deg,#eaf7ef,#f5fbf7);border:1px solid #d6ebdf;border-radius:22px;box-shadow:0 10px 28px #17372d12;color:#203d39}
+.merchant-app .account-banner.df-account-layout .due-box small{display:block;margin-bottom:9px;color:#54796a;font-size:.88rem;font-weight:650;line-height:1.6}
+.merchant-app .account-banner.df-account-layout .due-box strong{display:block;margin:0 0 8px;color:#14796c;font-size:clamp(1.65rem,6vw,2.1rem);font-weight:900;line-height:1.2}
+.merchant-app .account-banner.df-account-layout .due-box button{width:100%;min-height:54px;margin-top:14px;background:linear-gradient(105deg,#16866f,#0f715f);color:#fff;border:0;border-radius:14px;box-shadow:0 7px 16px #14796c25;font-size:1rem;font-weight:850}
+.merchant-app .app-header .header-title small{max-width:65vw;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:620px){.merchant-app .df-merchant-profile-card{margin:0 0 12px;padding:16px 17px;border-radius:19px}.merchant-app .df-merchant-profile-card h2{font-size:.96rem}.merchant-app .df-profile-row{grid-template-columns:minmax(116px,.85fr) minmax(0,1.15fr);gap:8px;margin-top:7px;padding:11px 12px}.merchant-app .df-profile-row span{font-size:.78rem}.merchant-app .df-profile-row b{font-size:.87rem}.merchant-app .account-banner.df-account-layout .due-box{margin-bottom:16px;padding:17px;border-radius:19px}.merchant-app .account-banner.df-account-layout .due-box button{min-height:51px;font-size:.94rem}}
+@media(max-width:350px){.merchant-app .df-profile-row{grid-template-columns:1fr;gap:5px}.merchant-app .df-profile-row b[dir="ltr"]{text-align:right}}
