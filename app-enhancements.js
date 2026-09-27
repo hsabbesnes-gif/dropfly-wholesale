@@ -94,15 +94,29 @@
           details = document.createElement('section');
           details.className = 'df-merchant-profile-card';
           details.dir = 'rtl';
-          const heading = document.createElement('h2');
-          heading.textContent = 'بيانات صاحب النشاط';
-          details.append(heading);
-          for (const [key, labelText] of [['owner', 'اسم صاحب النشاط'], ['personal', 'رقم الهاتف الشخصي'], ['business', 'رقم هاتف النشاط التجاري']]) {
-            const row = document.createElement('div'); row.className = 'df-profile-row'; row.dataset.field = key;
-            const label = document.createElement('span'); label.textContent = labelText;
-            const value = document.createElement('b'); value.dir = key === 'owner' ? 'rtl' : 'ltr';
-            row.append(label, value); details.append(row);
+          const head = document.createElement('div'); head.className = 'df-owner-head';
+          const avatar = document.createElement('div'); avatar.className = 'df-owner-avatar'; avatar.setAttribute('aria-hidden', 'true');
+          avatar.innerHTML = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="24" cy="15" r="8"/><path d="M9 41c1-9 7-14 15-14s14 5 15 14"/></svg><span class="df-owner-camera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3"/></svg></span>';
+          const intro = document.createElement('div'); intro.className = 'df-owner-intro';
+          const heading = document.createElement('h2'); heading.textContent = 'بيانات صاحب النشاط';
+          const hint = document.createElement('span'); hint.textContent = 'بيانات نشاطك التجاري';
+          intro.append(heading, hint);
+          const arrow = document.createElement('span'); arrow.className = 'df-owner-arrow'; arrow.setAttribute('aria-hidden', 'true'); arrow.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
+          head.append(avatar, intro, arrow); details.append(head);
+          const nameRow = document.createElement('div'); nameRow.className = 'df-owner-name df-profile-row'; nameRow.dataset.field = 'owner';
+          nameRow.innerHTML = '<span class="df-owner-field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4M8 7h2m4 0h2m-8 4h2m4 0h2"/></svg></span><span class="df-owner-value"><small>اسم صاحب النشاط</small><b dir="rtl"></b></span>';
+          details.append(nameRow);
+          const phones = document.createElement('div'); phones.className = 'df-owner-phones';
+          for (const [key, labelText, kind] of [['business', 'رقم الهاتف التجاري', 'business'], ['personal', 'رقم الهاتف الشخصي', 'personal']]) {
+            const row = document.createElement('div'); row.className = 'df-owner-phone'; row.dataset.field = key;
+            const icon = document.createElement('span'); icon.className = 'df-owner-phone-icon ' + kind;
+            icon.innerHTML = kind === 'business' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5zM9 8h2m3 0h2m-7 4h2m3 0h2m-7 4h2m3 0h2"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 2.8 10 2l2.1 5-2.4 1.8a16 16 0 0 0 5.5 5.5L17 12l5 2.1-.8 3.4c-.4 1.7-2.1 2.8-3.8 2.5C10 18.6 5.4 14 4 6.6 3.7 4.9 4.9 3.2 6.6 2.8Z"/></svg>';
+            const value = document.createElement('div'); value.className = 'df-owner-value';
+            const label = document.createElement('small'); label.textContent = labelText;
+            const number = document.createElement('b'); number.dir = 'ltr';
+            value.append(label, number); row.append(icon, value); phones.append(row);
           }
+          details.append(phones);
           banner.insertAdjacentElement('beforebegin', details);
         }
         const set = (key, value) => { const node = $(`[data-field="${key}"] b`, details); if (node) node.textContent = value || 'غير مسجل'; };
