@@ -59,3 +59,20 @@ body.df-home-orders .merchant-app .order .order-actions button{font-size:.72rem;
 .merchant-app .app-header .header-title small{max-width:65vw;white-space:normal;overflow-wrap:anywhere}
 @media(max-width:620px){.merchant-app .df-merchant-profile-card{margin:0 0 12px;padding:16px 17px;border-radius:19px}.merchant-app .df-merchant-profile-card h2{font-size:.96rem}.merchant-app .df-profile-row{grid-template-columns:minmax(116px,.85fr) minmax(0,1.15fr);gap:8px;margin-top:7px;padding:11px 12px}.merchant-app .df-profile-row span{font-size:.78rem}.merchant-app .df-profile-row b{font-size:.87rem}.merchant-app .account-banner.df-account-layout .due-box{margin-bottom:16px;padding:17px;border-radius:19px}.merchant-app .account-banner.df-account-layout .due-box button{min-height:51px;font-size:.94rem}}
 @media(max-width:350px){.merchant-app .df-profile-row{grid-template-columns:1fr;gap:5px}.merchant-app .df-profile-row b[dir="ltr"]{text-align:right}}
+/* Refined owner and payable cards: clear hierarchy, comfortable touch targets. */
+.merchant-app .df-merchant-profile-card{grid-column:1/-1;position:relative;overflow:hidden;margin:0 0 14px;padding:20px 22px;background:linear-gradient(145deg,#fff 35%,#f1faf5);border:1px solid #d6e9de;border-radius:22px;box-shadow:0 12px 30px #164b3510;color:#203d39}
+.merchant-app .df-merchant-profile-card:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#20aa83,#83d6aa)}
+.merchant-app .df-merchant-profile-card h2{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:1.08rem;color:#176f5d}
+.merchant-app .df-merchant-profile-card h2:before{content:"";width:34px;height:34px;flex:none;border-radius:11px;background:#e5f6ed url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2317765f' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.5'/%3E%3Cpath d='M5 20c.4-3.4 3.2-5.5 7-5.5s6.6 2.1 7 5.5'/%3E%3C/svg%3E") center/19px no-repeat}
+.merchant-app .df-profile-row{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:8px;padding:12px 13px;border:1px solid #e8f1ec;border-radius:13px;background:#fff}
+.merchant-app .df-profile-row span{color:#71847c;font-size:.82rem}
+.merchant-app .df-profile-row b{max-width:65%;overflow-wrap:anywhere;color:#24423a;font-size:.94rem}
+.merchant-app .df-profile-row b[dir="ltr"]{direction:ltr;text-align:left;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.merchant-app .account-banner.df-account-layout{display:block!important;grid-column:1/-1;width:100%;min-width:0;margin:0;padding:0;border:0;background:transparent;box-shadow:none;overflow:visible}
+.merchant-app .account-banner.df-account-layout>:not(.due-box){display:none!important}
+.merchant-app .account-banner.df-account-layout .due-box{display:block;width:100%;max-width:none;margin:0;padding:20px;background:linear-gradient(145deg,#fff,#f8fcf9);border:1px solid #dcebe2;border-radius:22px;box-shadow:0 10px 28px #164b350d}
+.merchant-app .account-banner.df-account-layout .due-box small{display:block;margin-bottom:8px;font-size:.88rem;font-weight:700;color:#53796b}
+.merchant-app .account-banner.df-account-layout .due-box strong{margin:0 0 6px;font-size:clamp(1.7rem,6vw,2.25rem);line-height:1.25;letter-spacing:-.02em;color:#14796c}
+.merchant-app .account-banner.df-account-layout .due-box p{margin:0 0 15px;font-size:.78rem;line-height:1.65;color:#74877f}
+.merchant-app .account-banner.df-account-layout .due-box button{min-height:52px;border-radius:14px;background:linear-gradient(100deg,#168a72,#20a882);box-shadow:0 7px 16px #168a7226;font-size:1rem}
+@media(max-width:620px){.merchant-app .df-merchant-profile-card{margin:0 0 12px;padding:17px 16px;border-radius:19px}.merchant-app .df-profile-row{align-items:flex-start;flex-direction:column;gap:5px}.merchant-app .df-profile-row b{max-width:100%}.merchant-app .account-banner.df-account-layout .due-box{padding:18px 16px;border-radius:19px}.merchant-app .account-banner.df-account-layout .due-box button{font-size:.94rem}}
