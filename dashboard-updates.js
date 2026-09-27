@@ -2,7 +2,7 @@
 'use strict';
 const API='https://xyuwqccmqggoctprbhzb.supabase.co/rest/v1',KEY='sb_publishable_RHnLnO4J-PdXnPhLQUHeXg_9vJjjzCx';
 const VAPID_PUBLIC='BCFsned-7k32oz0PJ7efIhbHakA1_wiQmsebBecfPqbEimnhM2KKWfuC15lfWRUmX2iJo6r4eq6UJ2baYqq8rw0';
-const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const $=(s,r=document)=>r?.querySelector?.(s)||null,$$=(s,r=document)=>[...(r?.querySelectorAll?.(s)||[])];
 const session=()=>{try{return JSON.parse(localStorage.getItem('dropfly-supabase-session')||'null')}catch{return null}};
 const user=()=>session()?.user||null,role=()=>user()?.app_metadata?.role||user()?.user_metadata?.role||($('.admin')?'admin':'merchant');
 async function api(path,query='',method='GET',body){const s=session();if(!s?.access_token)throw Error('انتهت الجلسة، سجل الدخول مجدداً');const res=await fetch(API+'/'+path+(query?'?'+query:''),{method,headers:{apikey:KEY,Authorization:'Bearer '+s.access_token,'Content-Type':'application/json',Prefer:method==='POST'?'return=representation':'return=minimal'},body:body===undefined?undefined:JSON.stringify(body)});const txt=await res.text();let data;try{data=txt?JSON.parse(txt):[]}catch{data=[]}if(!res.ok)throw Error(data.message||data.details||'تعذر إكمال العملية');return data}
