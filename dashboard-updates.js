@@ -38,15 +38,15 @@ $$('.admin-cards>article:not(.df-bound)',cards).forEach(card=>{card.classList.ad
 async function allRows(path,columns,query=''){const result=[];const size=1000;for(let offset=0;;offset+=size){const params='select='+columns+(query?'&'+query:'')+'&order=id.asc&limit='+size+'&offset='+offset;const batch=await api(path,params);result.push(...batch);if(batch.length<size)break}return result}
 let balancesPoll=null;
 async function unpaidAccounts(){
-  const page=$('.admin-content'),active=$('.admin-header nav button.active');
-  if(!page||!active?.textContent.includes('الحسابات')){if(balancesPoll){clearInterval(balancesPoll);balancesPoll=null}$('#df-unpaid-accounts')?.remove();return}
+  const page=$('.admin-content'),summary=$('.accounts-summary',page);
+  if(!page||!summary){if(balancesPoll){clearInterval(balancesPoll);balancesPoll=null}$('#df-unpaid-accounts')?.remove();return}
   let panel=$('#df-unpaid-accounts');
-  if(!panel){panel=el('section','df-unpaid-accounts');panel.id='df-unpaid-accounts';const summary=$('.accounts-summary',page);(summary||$('.admin-welcome',page))?.after(panel)}
+  if(!panel){panel=el('section','df-unpaid-accounts');panel.id='df-unpaid-accounts';summary.after(panel)}
   if(!panel||panel.dataset.loading==='1'||Date.now()-Number(panel.dataset.lastLoaded||0)<30000)return;
   panel.dataset.loading='1';
   try{
     const [profiles,transactions]=await Promise.all([allRows('wholesale_profiles','*'),allRows('wholesale_transactions','id,merchant_id,amount')]);
-    if(!panel.isConnected||!$('.admin-header nav button.active')?.textContent.includes('الحسابات'))return;
+    if(!panel.isConnected||!$('.accounts-summary',page))return;
     const totals=new Map();transactions.forEach(t=>totals.set(t.merchant_id,(totals.get(t.merchant_id)||0)+Number(t.amount||0)));
     const outstanding=profiles.filter(p=>p.role!=='admin').map(p=>({p,amount:Math.max(0,totals.get(p.id)||0)})).filter(x=>x.amount>0.009).sort((a,b)=>b.amount-a.amount);
     const header=el('header',''),heading=el('div','');heading.append(el('h2','','الحسابات غير المسددة'),el('small','',outstanding.length+' نشاط تجاري'));header.append(heading,el('strong','',cash(outstanding.reduce((n,x)=>n+x.amount,0))));panel.replaceChildren(header);
@@ -77,7 +77,7 @@ const ORDER_STATES=['قيد الانتظار','قيد التجهيز','قيد ا
 let selectedOrderStatus='all';
 function orderFilter(){
   const page=$('.admin .admin-table.admin-full');
-  if(!page||!$('.admin-header nav button.active')?.textContent.includes('الطلبات')){$('#df-order-status-filter')?.remove();return}
+  if(!page){$('#df-order-status-filter')?.remove();return}
   let bar=$('#df-order-status-filter');
   if(!bar){bar=el('div','df-order-filter');bar.id='df-order-status-filter';const label=el('label','','حالة الطلب'),select=el('select');select.id='df-order-status-select';select.setAttribute('aria-label','فلترة الطلبات حسب الحالة');label.append(select);bar.append(label,el('span','df-order-filter-count'));page.before(bar);select.onchange=()=>{selectedOrderStatus=select.value;filter()}}
   const cards=$$('article',page).filter(card=>!card.classList.contains('empty-inline'));
