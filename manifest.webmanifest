@@ -1,1 +1,18 @@
-{"name":"تاجر جملة دروب فلاي","short_name":"تاجر الجملة","description":"إدارة الطلبات والحسابات التجارية","start_url":"./","scope":"./","display":"standalone","background_color":"#f4f8fb","theme_color":"#0798df","lang":"ar","dir":"rtl"}
+{
+  "id": "/dropfly-wholesale/",
+  "name": "تاجر جملة دروب فلاي",
+  "short_name": "تاجر الجملة",
+  "description": "إدارة الطلبات والحسابات التجارية",
+  "start_url": "/dropfly-wholesale/",
+  "scope": "/dropfly-wholesale/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#f4f8fb",
+  "theme_color": "#14796c",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {"src": "/dropfly-wholesale/app-icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "/dropfly-wholesale/app-icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable"}
+  ]
+}
