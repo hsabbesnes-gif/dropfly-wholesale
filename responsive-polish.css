@@ -45,3 +45,32 @@
 @media(max-width:560px){.merchant-app:not(.df-prepared-view) .order .card-main{grid-template-columns:92px minmax(0,1fr)}.merchant-app:not(.df-prepared-view) .order .product-photo{width:92px;height:128px}.merchant-app:not(.df-prepared-view) .order .card-body{padding:10px}.merchant-app:not(.df-prepared-view) .order .order-top{align-items:flex-start;gap:5px;flex-wrap:wrap}.merchant-app:not(.df-prepared-view) .order .card-body h3{margin:7px 0 4px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.merchant-app:not(.df-prepared-view) .order .card-money{gap:5px;padding:8px}.merchant-app:not(.df-prepared-view) .order .card-money span{font-size:.64rem}.merchant-app:not(.df-prepared-view) .order .card-money strong{font-size:.78rem}.merchant-app .app-header{max-width:100%;gap:6px}.merchant-app .header-title{min-width:0}.merchant-app .header-title b{line-height:1.3}.admin .admin-stats article{padding:12px}.admin .admin-welcome{align-items:flex-start;flex-wrap:wrap;gap:12px}.admin .admin-table,.admin .admin-alerts,.admin .admin-support-page{padding:14px}.admin .admin-order-search{gap:6px}.admin .admin-order-search select{max-width:42%}.admin .admin-order-search span{width:100%;text-align:right}.reference-auth .auth-card{margin-block:clamp(20px,7vh,52px)}.reference-auth .auth-form{padding:24px 16px}.reference-auth .auth-logo h1{font-size:clamp(1.06rem,5.1vw,1.35rem)!important}.reference-auth form label{min-height:57px;padding-inline:11px}.reference-auth form label>span{max-width:43%;font-size:.79rem}.reference-auth .auth-switch{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}}
 @media(max-width:390px){.merchant-app.df-prepared-view .order .card-main{grid-template-columns:minmax(0,1fr) 76px;column-gap:8px}.merchant-app.df-prepared-view .order .product-photo{width:76px;height:82px}.merchant-app.df-prepared-view .order .order-top{flex-wrap:wrap}.merchant-app.df-prepared-view .order .badge{font-size:.64rem}.merchant-app.df-prepared-view .order-actions button,.merchant-app.df-prepared-view .order-actions .locked{flex:1 1 calc(50% - 6px)}.merchant-app .accounts .mini-stats{grid-template-columns:1fr}.merchant-app .accounts .mini-stats article{justify-content:flex-start}.merchant-app .app-nav button span{font-size:.72rem}.merchant-app .app-nav button svg{width:21px;height:21px}.admin .admin-stats b{font-size:1.1rem}.reference-auth .auth-form{padding-inline:11px}.reference-auth form label>span{font-size:.74rem}}
 @media(max-width:340px){.merchant-app .screen-head{padding:14px}.merchant-app .screen-head h1{font-size:1.07rem}.merchant-app .screen-head .count{padding:8px;font-size:.72rem}.merchant-app .app-nav{width:calc(100% - 10px);padding:4px}.merchant-app .app-nav button span{font-size:.66rem}.merchant-app:not(.df-prepared-view) .order .card-main{grid-template-columns:74px minmax(0,1fr)}.merchant-app:not(.df-prepared-view) .order .product-photo{width:74px;height:110px}.admin .admin-stats{grid-template-columns:1fr 1fr}.admin .admin-stats article{padding:9px}.reference-auth form label{padding-inline:8px}}
+
+/* The merchant header and order actions keep the same positions on every tab. */
+.merchant-app .header-actions .notify{order:1}
+.merchant-app .header-actions .df-notification-settings{order:2}
+.merchant-app .header-actions .logout{order:3}
+.merchant-app .header-actions .profile-chip{order:0}
+@media(max-width:700px){
+  .merchant-app .header-actions{display:flex;align-items:center;gap:8px;flex:none}
+  .merchant-app .header-actions .profile-chip{display:none}
+  .merchant-app .header-actions .notify,
+  .merchant-app .header-actions .logout,
+  .merchant-app .header-actions .df-notification-trigger{width:44px;height:44px;min-width:44px;border-radius:15px}
+  .merchant-app .order>.order-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%;margin-top:13px}
+  .merchant-app .order-actions>.state-btn,
+  .merchant-app .order-actions>.locked{order:0}
+  .merchant-app .order-actions>.df-details-action{order:1}
+  .merchant-app .order-actions>button:not(.state-btn):not(.df-details-action){order:2}
+  .merchant-app .order-actions>button:last-child{order:3}
+  .merchant-app .order-actions>button,
+  .merchant-app .order-actions>.locked{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;width:100%;min-height:46px;height:auto;margin:0;padding:8px 7px;font-size:clamp(.72rem,3vw,.85rem);line-height:1.25;text-align:center;border-radius:13px}
+  .merchant-app .order-actions>button svg,
+  .merchant-app .order-actions>.locked svg{flex:none;width:17px;height:17px}
+  .merchant-app.df-prepared-view .order{overflow:visible}
+  .merchant-app .app-content{padding-bottom:max(152px,calc(132px + env(safe-area-inset-bottom)))}
+}
+@media(max-width:390px){
+  .merchant-app.df-prepared-view .order-actions>button,
+  .merchant-app.df-prepared-view .order-actions>.locked{flex:none;font-size:.72rem;padding:7px 4px}
+}
