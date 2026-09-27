@@ -33,3 +33,10 @@ body.df-home-orders .merchant-app .order .order-actions button{font-size:.72rem;
 .df-install-banner{position:fixed;z-index:12000;inset:auto 16px calc(18px + env(safe-area-inset-bottom)) 16px;max-width:560px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;background:#fff;border:1px solid #dbe9e1;border-radius:18px;box-shadow:0 12px 42px #17372d30;color:#203d39;font-family:inherit;direction:rtl}
 .df-install-copy{display:grid;gap:4px;min-width:0}.df-install-copy strong{font-size:.92rem}.df-install-copy span{font-size:.76rem;color:#658077;line-height:1.5}.df-install-actions{display:flex;align-items:center;gap:7px;flex:none}.df-install-actions button{font:inherit;font-size:.78rem;font-weight:800;border-radius:10px;padding:9px 13px;cursor:pointer}.df-install-action{border:0;background:#14796c;color:white}.df-install-dismiss{border:1px solid #dce8e1;background:#f7faf8;color:#56756b}
 @media(max-width:460px){.df-install-banner{inset-inline:10px;padding:12px;gap:8px}.df-install-actions button{padding:8px 10px}.df-install-copy strong{font-size:.82rem}.df-install-copy span{font-size:.69rem}}
+/* Clear, responsive owner and contact details on the merchant account page. */
+.merchant-app .df-merchant-profile-card{margin:14px 0 18px;padding:18px 20px;background:#fff;border:1px solid #e0ebe5;border-radius:20px;box-shadow:0 8px 26px #244e3b0b;color:#203d39}
+.merchant-app .df-merchant-profile-card h2{margin:0 0 10px;font-size:1rem;font-weight:800;color:#14796c}
+.merchant-app .df-profile-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 0;border-top:1px solid #edf2ef}
+.merchant-app .df-profile-row span{color:#71847c;font-size:.88rem}
+.merchant-app .df-profile-row b{max-width:65%;overflow-wrap:anywhere;color:#24423a;font-size:.92rem}
+@media(max-width:620px){.merchant-app .df-merchant-profile-card{margin:12px 0 16px;padding:15px;border-radius:17px}.merchant-app .df-profile-row{align-items:flex-start;flex-direction:column;gap:5px}.merchant-app .df-profile-row b{max-width:100%}}
