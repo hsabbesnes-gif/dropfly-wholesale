@@ -21,14 +21,14 @@
     <script defer src="./order-chat.js?v=9"></script>
     <script defer src="./dashboard-updates.js?v=13"></script>
     <script defer src="./preserve-view.js?v=1"></script>
-    <script defer src="./prepared-interactions.js?v=1"></script>
+    <script defer src="./prepared-interactions.js?v=2"></script>
     <script defer src="./profile-review.js?v=1"></script>
     <script>
       if ('serviceWorker' in navigator) {
         const hadController = !!navigator.serviceWorker.controller;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (hadController && sessionStorage.getItem('dropfly-sw-v30-reloaded') !== '1') {
-            sessionStorage.setItem('dropfly-sw-v30-reloaded', '1');
+          if (hadController && sessionStorage.getItem('dropfly-sw-v31-reloaded') !== '1') {
+            sessionStorage.setItem('dropfly-sw-v31-reloaded', '1');
             location.reload();
           }
         });
