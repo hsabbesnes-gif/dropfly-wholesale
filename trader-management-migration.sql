@@ -1,4 +1,8 @@
 -- Apply in the Supabase SQL editor. Requires the existing wholesale_profiles table.
+alter table public.wholesale_profiles drop constraint if exists wholesale_profiles_status_check;
+alter table public.wholesale_profiles add constraint wholesale_profiles_status_check
+  check (status in ('pending','approved','rejected','blocked'));
+
 create table if not exists public.wholesale_block_appeals (
   id uuid primary key default gen_random_uuid(),
   merchant_id uuid not null references auth.users(id) on delete cascade,
@@ -37,6 +41,10 @@ with check (sender_id=auth.uid() and exists (
 ));
 grant select,insert on public.wholesale_block_appeals, public.wholesale_block_appeal_messages to authenticated;
 
+drop policy if exists "admin removes trader avatars" on storage.objects;
+create policy "admin removes trader avatars" on storage.objects for delete to authenticated
+using (bucket_id='wholesale-avatars' and public.dropfly_profile_admin());
+
 -- Management actions run with the database owner's privileges, but always check
 -- the authenticated caller. A failed delete rolls back completely.
 create or replace function public.dropfly_manage_trader(p_merchant_id uuid,p_action text)
@@ -53,7 +61,20 @@ begin
     update public.wholesale_profiles set status='approved' where id=p_merchant_id and status='blocked';
     if not found then raise exception 'Account is not blocked'; end if;
   elsif p_action='delete' then
-    -- Do not leave a login account behind. FK violations abort this transaction.
+    -- Remove all merchant-owned data and references before deleting the Auth
+    -- account. The whole function is one transaction: any FK error rolls back.
+    delete from public.wholesale_support_messages where sender_id=p_merchant_id or ticket_id in
+      (select id from public.wholesale_support_tickets where merchant_id=p_merchant_id);
+    delete from public.wholesale_support_tickets where merchant_id=p_merchant_id;
+    delete from public.wholesale_transactions where merchant_id=p_merchant_id or order_id in
+      (select id from public.wholesale_orders where merchant_id=p_merchant_id) or payout_request_id in
+      (select id from public.wholesale_payout_requests where merchant_id=p_merchant_id);
+    delete from public.wholesale_order_items where order_id in
+      (select id from public.wholesale_orders where merchant_id=p_merchant_id);
+    delete from public.wholesale_payout_requests where merchant_id=p_merchant_id;
+    delete from public.wholesale_orders where merchant_id=p_merchant_id;
+    delete from public.wholesale_notifications where sender_id=p_merchant_id or recipient_id=p_merchant_id or user_id=p_merchant_id;
+    delete from public.wholesale_audit_log where actor_id=p_merchant_id;
     delete from auth.users where id=p_merchant_id;
     if not found then raise exception 'Authentication account not found'; end if;
     delete from public.wholesale_profiles where id=p_merchant_id;
