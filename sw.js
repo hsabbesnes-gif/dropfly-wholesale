@@ -1,4 +1,4 @@
-const CACHE = "dropfly-wholesale-github-v34";
+const CACHE = "dropfly-wholesale-github-v35";
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 const scoped = (path) => new URL(path.replace(/^\/+/, ""), self.registration.scope).pathname;
 const STATIC_ASSETS = [scoped("/"), scoped("/manifest.webmanifest"), scoped("/app-icon-maskable.svg"), scoped("/app-enhancements.js"), scoped("/app-enhancements.css")];
@@ -18,12 +18,17 @@ self.addEventListener("push", (event) => {
   const requested = new URL(data.url || scoped("/"), self.location.origin);
   const safeUrl = requested.origin === self.location.origin && requested.pathname.startsWith(SCOPE_PATH + "/")
     ? requested.href : new URL(scoped("/"), self.location.origin).href;
+  const orderId = String(data.entity_id || "");
+  const opensOrder = /^(new_order|order_status)-/.test(String(data.tag || "")) &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(orderId);
+  const target = new URL(safeUrl);
+  if (opensOrder) target.hash = "order=" + encodeURIComponent(orderId);
   event.waitUntil(self.registration.showNotification(data.title || "تحديث جديد", {
     body: data.body || data.message || "لديك إشعار جديد",
     icon: scoped("/app-icon-maskable.svg"), badge: scoped("/app-icon-maskable.svg"),
     lang: "ar", dir: "rtl", silent: false,
     tag: (data.tag || data.entity_id || "dropfly-notification") + "-" + Date.now(),
-    data: { url: safeUrl }, renotify: false,
+    data: { url: target.href }, renotify: false,
     actions: [{ action: "open", title: "فتح التطبيق" }]
   }));
 });

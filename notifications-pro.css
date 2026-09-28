@@ -2,9 +2,11 @@
 .merchant-app .notify-panel{top:76px;left:max(12px,calc(50vw - 590px))}
 .merchant-app .notify-panel h3,.admin .admin-notify-panel>b{display:block;position:sticky;top:0;z-index:1;margin:0;padding:19px 20px 15px;background:#fff;color:#13283f;font-size:1.05rem;font-weight:900;border-bottom:1px solid #eef2f7}
 .merchant-app .notify-panel h3:before,.admin .admin-notify-panel>b:before{content:'🔔';display:inline-block;margin-left:8px;font-size:1rem}
-.df-notice-toolbar{display:flex;gap:7px;padding:12px 17px 6px;background:#fff}
+.df-notice-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:12px 17px 6px;background:#fff}
 .df-notice-toolbar button{border:0;border-radius:999px;background:#f1f6fa;color:#62788c;padding:8px 13px;font-size:.77rem;font-weight:800;cursor:pointer}
 .df-notice-toolbar button.is-active{background:#e2f1ff;color:#087bbb}
+.df-notice-toolbar .df-mark-all{margin-inline-start:auto;background:#eaf8f2;color:#07865f}
+.df-notice-toolbar button:disabled,.df-admin-notices button:disabled{opacity:.6;cursor:wait}
 .merchant-app .notify-panel article{position:relative;align-items:flex-start;gap:12px;margin:6px 9px;padding:13px 11px;border:0;border-radius:16px;background:#f3f9ff;cursor:pointer}
 .merchant-app .notify-panel article.read{background:#fff;color:#62788c}
 .merchant-app .notify-panel article:not(.read):before{content:'';position:absolute;left:12px;top:18px;width:7px;height:7px;border-radius:50%;background:#168add}
@@ -32,6 +34,7 @@
 .df-notice-content{display:grid;gap:3px;min-width:0;font-size:.73rem;line-height:1.55;white-space:pre-line;overflow-wrap:anywhere}
 .df-notice-content strong{font-size:.8rem;color:#18354b}.df-notice-content small{color:#8296a6;font-size:.68rem}
 .admin .df-refresh-notices{display:block;width:100%;margin-top:8px;border:1px solid #dceaf3;border-radius:10px;background:#fff;color:#087bbb;padding:8px;font-size:.73rem}
+.admin .df-mark-all-admin{display:block;width:100%;margin-top:8px;border:0;border-radius:10px;background:#eaf8f2;color:#07865f;padding:9px;font-size:.75rem;font-weight:800}
 .admin .admin-notify-panel .notification-compose{display:grid;gap:8px;padding:12px;border-top:1px solid #edf2f7}
 .df-notification-toasts{position:fixed;z-index:10090;top:max(18px,env(safe-area-inset-top));left:50%;width:min(420px,calc(100vw - 24px));transform:translateX(-50%);display:grid;gap:8px;pointer-events:none}
 .df-notification-toast{display:flex;align-items:flex-start;gap:11px;width:100%;padding:13px;border:1px solid #d7e9f5;border-radius:17px;background:#fff;box-shadow:0 12px 34px #1c4f7840;direction:rtl;text-align:right;pointer-events:auto;cursor:pointer}
