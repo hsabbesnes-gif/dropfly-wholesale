@@ -1,4 +1,4 @@
-const CACHE = "dropfly-wholesale-github-v33";
+const CACHE = "dropfly-wholesale-github-v34";
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 const scoped = (path) => new URL(path.replace(/^\/+/, ""), self.registration.scope).pathname;
 const STATIC_ASSETS = [scoped("/"), scoped("/manifest.webmanifest"), scoped("/app-icon-maskable.svg"), scoped("/app-enhancements.js"), scoped("/app-enhancements.css")];
@@ -15,10 +15,16 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("push", (event) => {
   let data = {};
   try { data = event.data ? event.data.json() : {}; } catch { data = { body: event.data?.text() || "لديك تحديث جديد" }; }
+  const requested = new URL(data.url || scoped("/"), self.location.origin);
+  const safeUrl = requested.origin === self.location.origin && requested.pathname.startsWith(SCOPE_PATH + "/")
+    ? requested.href : new URL(scoped("/"), self.location.origin).href;
   event.waitUntil(self.registration.showNotification(data.title || "تحديث جديد", {
     body: data.body || data.message || "لديك إشعار جديد",
-    tag: data.tag || data.entity_id || "dropfly-notification",
-    data: { url: data.url || scoped("/") }, renotify: true
+    icon: scoped("/app-icon-maskable.svg"), badge: scoped("/app-icon-maskable.svg"),
+    lang: "ar", dir: "rtl", silent: false,
+    tag: (data.tag || data.entity_id || "dropfly-notification") + "-" + Date.now(),
+    data: { url: safeUrl }, renotify: false,
+    actions: [{ action: "open", title: "فتح التطبيق" }]
   }));
 });
 self.addEventListener("notificationclick", (event) => {

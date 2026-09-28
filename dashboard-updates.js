@@ -8,12 +8,45 @@ const user=()=>session()?.user||null,role=()=>user()?.app_metadata?.role||user()
 async function api(path,query='',method='GET',body){const s=session();if(!s?.access_token)throw Error('انتهت الجلسة، سجل الدخول مجدداً');const res=await fetch(API+'/'+path+(query?'?'+query:''),{method,headers:{apikey:KEY,Authorization:'Bearer '+s.access_token,'Content-Type':'application/json',Prefer:method==='POST'?'return=representation':'return=minimal'},body:body===undefined?undefined:JSON.stringify(body)});const txt=await res.text();let data;try{data=txt?JSON.parse(txt):[]}catch{data=[]}if(!res.ok)throw Error(data.message||data.details||'تعذر إكمال العملية');return data}
 const date=v=>v?new Date(v).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'}):'—',cash=v=>Number(v||0).toLocaleString('en-US')+' د.ع';
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=String(text);return n}
-function sound(title,body,tag){try{if(sessionStorage.getItem('df-sound-enabled')==='1'&&window.AudioContext){const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(880,c.currentTime);o.frequency.setValueAtTime(1174,c.currentTime+.12);g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.14,c.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.42);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.44)}}catch{}try{if(window.Notification?.permission==='granted')new Notification(title,{body,tag})}catch{}}
-function soundButtons(){const host=$('.admin-header');if(!host||$('#df-sound-toggle'))return;const b=el('button','df-sound-toggle');b.id='df-sound-toggle';b.type='button';const update=()=>b.textContent=sessionStorage.getItem('df-sound-enabled')==='1'?'🔊 الصوت مفعل':'🔇 تفعيل صوت التنبيهات';update();b.onclick=()=>{sessionStorage.setItem('df-sound-enabled',sessionStorage.getItem('df-sound-enabled')==='1'?'0':'1');update()};host.append(b)}
+function sound(title,body,tag){
+  // Web Push owns the device notification and its system sound. Keep polling visual-only
+  // so a new server event cannot create a second notification or a synthetic tone.
+  if(document.hidden)return;
+  const host=document.querySelector('#df-notification-toasts')||document.body.appendChild(el('div','df-notification-toasts'));
+  host.id='df-notification-toasts';
+  if(host.querySelector('[data-notice-id="'+CSS.escape(String(tag))+'"]'))return;
+  const toast=el('button','df-notification-toast');toast.type='button';toast.dataset.noticeId=String(tag);
+  toast.append(el('span','df-notification-toast-icon','🔔'));
+  const content=el('span','');content.append(el('strong','',title),el('small','',body));toast.append(content);
+  toast.onclick=()=>{toast.remove();document.querySelector('.merchant-app .notify,.admin-header .notify')?.click()};
+  host.append(toast);setTimeout(()=>toast.remove(),6500);
+}
+function soundButtons(){}
 function vapidBytes(value){const raw=atob(value.replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(raw,c=>c.charCodeAt(0))}
 async function registerPush(){if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window))throw Error('المتصفح لا يدعم إشعارات الهاتف');const permission=await Notification.requestPermission();if(permission!=='granted')throw Error('اسمح بالإشعارات من إعدادات المتصفح');const registration=await navigator.serviceWorker.ready;let sub=await registration.pushManager.getSubscription();if(!sub)sub=await registration.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:vapidBytes(VAPID_PUBLIC)});const u=user(),s=session();if(!u?.id||!s?.access_token)throw Error('سجل الدخول ثم حاول مجدداً');const keys=sub.toJSON().keys||{};const response=await fetch(API+'/wholesale_push_subscriptions?on_conflict=endpoint',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+s.access_token,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:u.id,recipient_role:role()==='admin'?'admin':'merchant',endpoint:sub.endpoint,p256dh:keys.p256dh,auth:keys.auth})});if(!response.ok)throw Error('تعذر حفظ إعداد الإشعارات')}
-function pushButton(){if(!VAPID_PUBLIC||VAPID_PUBLIC.startsWith('__'))return;const host=$('.admin-header');if(!host||$('#df-admin-push'))return;const b=el('button','df-push-toggle','🔔 تفعيل إشعارات الهاتف');b.id='df-admin-push';b.type='button';b.onclick=async()=>{b.disabled=true;try{await registerPush();b.textContent='🔔 إشعارات الهاتف مفعّلة'}catch(e){alert(e.message||'تعذر تفعيل الإشعارات')}finally{b.disabled=false}};host.append(b)}
-function merchantNotificationControls(){const host=$('.merchant-app .header-actions');if(!host||$('#df-merchant-notification-settings',host))return;const wrap=el('div','df-notification-settings');wrap.id='df-merchant-notification-settings';const trigger=el('button','df-notification-trigger','⚙');trigger.type='button';trigger.title='إعدادات الإشعارات';trigger.setAttribute('aria-label','إعدادات الإشعارات');trigger.setAttribute('aria-expanded','false');const menu=el('div','df-notification-menu');menu.hidden=true;menu.append(el('strong','','إعدادات الإشعارات'));const soundButton=el('button','df-notification-option'),push=el('button','df-notification-option');soundButton.type=push.type='button';const updateSound=()=>{const on=sessionStorage.getItem('df-sound-enabled')==='1';soundButton.textContent=on?'🔊  صوت التنبيهات مفعّل':'🔇  تفعيل صوت التنبيهات';soundButton.setAttribute('aria-pressed',String(on))};updateSound();soundButton.onclick=()=>{sessionStorage.setItem('df-sound-enabled',sessionStorage.getItem('df-sound-enabled')==='1'?'0':'1');updateSound()};push.textContent='📱  تفعيل إشعارات الهاتف';push.onclick=async()=>{push.disabled=true;push.textContent='جارِ تفعيل إشعارات الهاتف…';try{await registerPush();push.textContent='✓  إشعارات الهاتف مفعّلة';push.classList.add('is-active')}catch(e){push.textContent='📱  تفعيل إشعارات الهاتف';message.textContent=e.message||'تعذر تفعيل الإشعارات'}finally{push.disabled=false}};const message=el('small','df-notification-hint','تصل الإشعارات حتى بعد إغلاق الموقع عند تفعيلها');menu.append(soundButton,push,message);wrap.append(trigger,menu);host.insertBefore(wrap,host.querySelector('.logout'));trigger.onclick=e=>{e.stopPropagation();menu.hidden=!menu.hidden;trigger.setAttribute('aria-expanded',String(!menu.hidden))}}
+async function hasPush(){
+  if(!('serviceWorker'in navigator)||!('Notification'in window)||Notification.permission!=='granted')return false;
+  try{return !!(await(await navigator.serviceWorker.ready).pushManager.getSubscription())}catch{return false}
+}
+function pushButton(){
+  const host=$('.admin-header');if(!host||$('#df-admin-push'))return;
+  const b=el('button','df-push-toggle','🔔 تفعيل إشعارات الجهاز');b.id='df-admin-push';b.type='button';
+  hasPush().then(on=>{if(b.isConnected&&on)b.textContent='🔔 إشعارات الجهاز مفعّلة'});
+  b.onclick=async()=>{b.disabled=true;try{await registerPush();b.textContent='🔔 إشعارات الجهاز مفعّلة'}catch(e){alert(e.message||'تعذر تفعيل الإشعارات')}finally{b.disabled=false}};host.append(b)
+}
+function merchantNotificationControls(){
+  const host=$('.merchant-app .header-actions');if(!host||$('#df-merchant-notification-settings',host))return;
+  const wrap=el('div','df-notification-settings');wrap.id='df-merchant-notification-settings';
+  const trigger=el('button','df-notification-trigger','⚙');trigger.type='button';trigger.title='إعدادات الإشعارات';
+  trigger.setAttribute('aria-label','إعدادات الإشعارات');trigger.setAttribute('aria-expanded','false');
+  const menu=el('div','df-notification-menu');menu.hidden=true;menu.append(el('strong','','إشعارات الجهاز'));
+  const push=el('button','df-notification-option','🔔  تفعيل إشعارات الجهاز');push.type='button';
+  const message=el('small','df-notification-hint','تستخدم الإشعارات نغمة جهازك الأصلية. تأكد أن صوت إشعارات المتصفح مفعّل من إعدادات الهاتف.');
+  const update=async()=>{const on=await hasPush();if(!push.isConnected)return;push.textContent=on?'✓  إشعارات الجهاز مفعّلة':'🔔  تفعيل إشعارات الجهاز';push.classList.toggle('is-active',on)};
+  push.onclick=async()=>{push.disabled=true;push.textContent='جارِ التفعيل…';try{await registerPush();message.textContent='تم التفعيل. ستصل الإشعارات بنغمة الجهاز الأصلية.'}catch(e){message.textContent=e.message||'تعذر تفعيل الإشعارات'}finally{push.disabled=false;update()}};
+  menu.append(push,message);wrap.append(trigger,menu);host.insertBefore(wrap,host.querySelector('.logout'));
+  trigger.onclick=e=>{e.stopPropagation();menu.hidden=!menu.hidden;trigger.setAttribute('aria-expanded',String(!menu.hidden));if(!menu.hidden)update()};update()
+}
 document.addEventListener('click',e=>{const wrap=$('#df-merchant-notification-settings');if(wrap&&!wrap.contains(e.target)){const menu=$('.df-notification-menu',wrap);menu.hidden=true;$('.df-notification-trigger',wrap).setAttribute('aria-expanded','false')}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const menu=$('#df-merchant-notification-settings .df-notification-menu');if(menu&&!menu.hidden){menu.hidden=true;$('#df-merchant-notification-settings .df-notification-trigger')?.focus()}}});
 let seen=new Set(),primed=false,poll=null;

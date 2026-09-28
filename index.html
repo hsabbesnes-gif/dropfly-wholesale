@@ -19,17 +19,19 @@
     <link rel="stylesheet" href="./responsive-polish.css?v=4" />
     <link rel="stylesheet" href="./profile-review.css?v=1" />
     <link rel="stylesheet" href="./delivery-confirm.css?v=2" />
+    <link rel="stylesheet" href="./notifications-pro.css?v=1" />
     <script defer src="./order-chat.js?v=9"></script>
-    <script defer src="./dashboard-updates.js?v=13"></script>
+    <script defer src="./dashboard-updates.js?v=14"></script>
     <script defer src="./preserve-view.js?v=1"></script>
     <script defer src="./prepared-interactions.js?v=3"></script>
     <script defer src="./profile-review.js?v=1"></script>
+    <script defer src="./notifications-pro.js?v=1"></script>
     <script>
       if ('serviceWorker' in navigator) {
         const hadController = !!navigator.serviceWorker.controller;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (hadController && sessionStorage.getItem('dropfly-sw-v33-reloaded') !== '1') {
-            sessionStorage.setItem('dropfly-sw-v33-reloaded', '1');
+          if (hadController && sessionStorage.getItem('dropfly-sw-v34-reloaded') !== '1') {
+            sessionStorage.setItem('dropfly-sw-v34-reloaded', '1');
             location.reload();
           }
         });
